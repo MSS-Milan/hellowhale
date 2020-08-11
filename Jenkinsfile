@@ -1,8 +1,7 @@
 pipeline {
 
   agent any
-    def registry = 'milan2312/hellowhale'
-    def registryCredential = 'dockerhub'
+  
 
   stages {
 
@@ -19,14 +18,18 @@ pipeline {
                 }
             }
         }
-    
-   stage('Building image') {
-        docker.withRegistry( 'https://' + registry, registryCredential ) {
-		    def buildName = registry + ":$BUILD_NUMBER"
-			newApp = docker.build buildName
-			newApp.push()
+	stage("Push image") {
+            steps {
+                script {
+                    docker.withRegistry('https://milan2312/hellowhale', 'dockerhub') {
+                            myapp.push("latest")
+                            myapp.push("${env.BUILD_ID}")
+                    }
+                }
+            }
         }
-	}
+    
+   
 
     
 
