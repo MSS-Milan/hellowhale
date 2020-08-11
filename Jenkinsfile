@@ -31,9 +31,8 @@ pipeline {
 	
       stage('Deploy App') {
       steps {
-        script {
-          kubernetesDeploy(configs: "hellowhale.yml", kubeconfigId: "mykubeconfig")
-        }
+          sh "sed -i -e 's,image_to_be_deployed,'milan2312/hellowhale:${env.BUILD_ID}',g' hellowhale.yml"
+	  sh "export KUBECONFIG=/etc/kubernetes/admin.conf && kubectl apply -f hellowhale.yml"
       }
     }
 
