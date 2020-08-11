@@ -1,7 +1,7 @@
 pipeline {
 
   agent any
-    def registry = 'milan2312/hellowhale
+    def registry = 'milan2312/hellowhale'
     def registryCredential = 'dockerhub'
 
   stages {
